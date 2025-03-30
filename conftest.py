@@ -8,7 +8,7 @@ from selenium.webdriver.chrome.options import Options
 
 @pytest.fixture(scope="function")
 def driver(request):
-    """Фикстура драйвера с поддержкой параллельного выполнения"""
+    # Фикстура драйвера с поддержкой параллельного выполнения
     worker_id = os.environ.get("PYTEST_XDIST_WORKER", "default")
     current_dir = os.path.abspath(os.getcwd())
     temp_dir = os.path.join(current_dir, f"tmp_test_{worker_id}_{uuid.uuid4()}")
@@ -36,7 +36,7 @@ def driver(request):
             )
             driver.quit()
 
-            # Удаляем временную папку
+            # Удаление временной папки
             try:
                 os.rmdir(temp_dir)
             except Exception as e:

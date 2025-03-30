@@ -16,39 +16,22 @@ class TestCustomerDeletion:
 
     @allure.story("Удаление клиентов по длине имени")
     @allure.severity(Severity.CRITICAL)
-    @allure.description("""
-    Тест удаляет всех клиентов, у которых длина имени ближе всего к средней длине всех имён.
-    Алгоритм:
-    1. Вычисляется средняя длина всех имён
-    2. Находятся имена с минимальным отклонением от средней длины
-    3. Все подходящие клиенты удаляются
-    4. Проверяется отсутствие удалённых клиентов в таблице
-    """)
+    @allure.description("""Тест удаляет всех клиентов, у которых длина имени ближе всего к средней длине всех имён""")
     def test_delete_all_closest_candidates(self, driver):
-        with allure.step("1. Подготовка: открытие страницы и загрузка данных"):
+        with allure.step("Открытие страницы и загрузка данных"):
             driver.get(self.CUSTOMERS_URL)
-            WebDriverWait(driver, 15).until(
-                EC.visibility_of_element_located(AbsolutelyAllLocators.customer_table)
-            )
+            WebDriverWait(driver, 15).until(EC.visibility_of_element_located(AbsolutelyAllLocators.customer_table))
 
             name_elements = driver.find_elements(*AbsolutelyAllLocators.first_name_cells)
             names = [name.text for name in name_elements if name.text not in ["First Name", ""]]
 
-            allure.attach(
-                "\n".join(names),
-                name="Исходный список клиентов",
-                attachment_type=allure.attachment_type.TEXT
-            )
-            allure.attach(
-                driver.get_screenshot_as_png(),
-                name="Скриншот таблицы до удаления",
-                attachment_type=allure.attachment_type.PNG
-            )
+            allure.attach("\n".join(names), name="Исходный список клиентов", attachment_type=allure.attachment_type.TEXT)
+            allure.attach(driver.get_screenshot_as_png(), name="Скриншот таблицы до удаления", attachment_type=allure.attachment_type.PNG)
 
         if not names:
             pytest.skip("Нет клиентов для удаления")
 
-        with allure.step("2. Расчёт средней длины имён"):
+        with allure.step("Расчёт средней длины имён"):
             lengths = [len(name) for name in names]
             avg_length = sum(lengths) / len(lengths)
 
@@ -84,17 +67,9 @@ class TestCustomerDeletion:
                             time.sleep(1)
                             deleted_count += 1
 
-                            allure.attach(
-                                driver.get_screenshot_as_png(),
-                                name=f"После удаления {name}",
-                                attachment_type=allure.attachment_type.PNG
-                            )
+                            allure.attach(driver.get_screenshot_as_png(), name=f"После удаления {name}", attachment_type=allure.attachment_type.PNG)
                 except Exception as e:
-                    allure.attach(
-                        str(e),
-                        name=f"Ошибка при обработке строки",
-                        attachment_type=allure.attachment_type.TEXT
-                    )
+                    allure.attach(str(e), name=f"Ошибка при обработке строки", attachment_type=allure.attachment_type.TEXT)
                     continue
 
         with allure.step("5. Верификация результатов"):
@@ -113,10 +88,6 @@ class TestCustomerDeletion:
             assert deleted_count == len(closest_names), "Удалены не все кандидаты"
             assert all(name not in remaining_names for name in closest_names), "Некоторые кандидаты остались в таблице"
 
-            allure.attach(
-                driver.get_screenshot_as_png(),
-                name="Финальный скриншот таблицы",
-                attachment_type=allure.attachment_type.PNG
-            )
+            allure.attach(driver.get_screenshot_as_png(), name="Финальный скриншот таблицы", attachment_type=allure.attachment_type.PNG)
 
         allure.dynamic.title(f"Успешно удалено {deleted_count} клиентов из {len(closest_names)} кандидатов")

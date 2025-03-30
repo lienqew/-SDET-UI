@@ -12,8 +12,7 @@ class AddCustomerPage:
     def open(self):
         self.driver.get(self.url)
         # Добавляем ожидание кнопки
-        WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(AbsolutelyAllLocators.tab_button_add_customer)).click()
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(AbsolutelyAllLocators.tab_button_add_customer)).click()
 
     def fill_customer_details(self, first_name, last_name, post_code):
         # Ожидаем и заполняем поля (сохраняем вашу логику)
@@ -28,5 +27,4 @@ class AddCustomerPage:
 
     def submit(self):
         # Ожидаем кнопку перед кликом
-        WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(AbsolutelyAllLocators.add_customer_button)).click()
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(AbsolutelyAllLocators.add_customer_button)).click()
