@@ -1,1 +1,0 @@
-Ошибка при удалении временной папки: [WinError 145] Папка не пуста: 'C:\\Users\\leahm\\PycharmProjects\\-SDET-UI\\tmp_test_gw1_4e172c30-3302-4871-86f5-3396290785bd'
