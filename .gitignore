@@ -1,0 +1,41 @@
+# Папка для IDE
+.idea/
+
+# Папка виртуального окружения
+venv/
+*.venv
+
+# Папки кэша Python
+__pycache__/
+*.py[cod]
+__pycache__
+pycache
+
+# Логи
+*.log
+
+# Файлы отчетов Allure
+allure-results/
+allure-report/
+
+# Временные файлы
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Временные папки
+tmp/
+temp/
+temp-*/  # Игнорировать папки, начинающиеся с "temp-"
+*/tmp/    # Игнорировать любые папки с именем "tmp" в любой директории
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Другие временные файлы
+*.orig
+*.rej
+*.sublime-workspace
+*.sublime-project
