@@ -8,6 +8,7 @@ venv/
 # Папки кэша Python
 __pycache__/
 *.py[cod]
+__pycache__
 
 # Логи
 *.log
